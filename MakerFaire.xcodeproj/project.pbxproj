@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D1275BAC19F1566A00FBEDCD /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1275BAB19F1566A00FBEDCD /* LocationManager.swift */; };
+		D1275BAE19F1572800FBEDCD /* BeaconFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1275BAD19F1572800FBEDCD /* BeaconFactory.swift */; };
+		D1275BB019F15B1F00FBEDCD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1275BAF19F15B1F00FBEDCD /* CoreLocation.framework */; };
 		D16794CD19EA0F2300A1598F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16794CC19EA0F2300A1598F /* AppDelegate.swift */; };
 		D16794D019EA0F2300A1598F /* MakerFaire.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D16794CE19EA0F2300A1598F /* MakerFaire.xcdatamodeld */; };
 		D16794D219EA0F2300A1598F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16794D119EA0F2300A1598F /* MasterViewController.swift */; };
@@ -28,6 +31,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D1275BAB19F1566A00FBEDCD /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D1275BAD19F1572800FBEDCD /* BeaconFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconFactory.swift; sourceTree = "<group>"; };
+		D1275BAF19F15B1F00FBEDCD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D16794C719EA0F2300A1598F /* MakerFaire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerFaire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D16794CB19EA0F2300A1598F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D16794CC19EA0F2300A1598F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1275BB019F15B1F00FBEDCD /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +70,7 @@
 		D16794BE19EA0F2300A1598F = {
 			isa = PBXGroup;
 			children = (
+				D1275BAF19F15B1F00FBEDCD /* CoreLocation.framework */,
 				D16794C919EA0F2300A1598F /* MakerFaire */,
 				D16794E419EA0F2300A1598F /* MakerFaireTests */,
 				D16794C819EA0F2300A1598F /* Products */,
@@ -81,6 +89,8 @@
 		D16794C919EA0F2300A1598F /* MakerFaire */ = {
 			isa = PBXGroup;
 			children = (
+				D1275BAD19F1572800FBEDCD /* BeaconFactory.swift */,
+				D1275BAB19F1566A00FBEDCD /* LocationManager.swift */,
 				D16794CC19EA0F2300A1598F /* AppDelegate.swift */,
 				D16794D119EA0F2300A1598F /* MasterViewController.swift */,
 				D16794D319EA0F2300A1598F /* DetailViewController.swift */,
@@ -220,7 +230,9 @@
 			files = (
 				D16794D019EA0F2300A1598F /* MakerFaire.xcdatamodeld in Sources */,
 				D16794CD19EA0F2300A1598F /* AppDelegate.swift in Sources */,
+				D1275BAC19F1566A00FBEDCD /* LocationManager.swift in Sources */,
 				D16794D219EA0F2300A1598F /* MasterViewController.swift in Sources */,
+				D1275BAE19F1572800FBEDCD /* BeaconFactory.swift in Sources */,
 				D16794D419EA0F2300A1598F /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +425,7 @@
 				D16794ED19EA0F2300A1598F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D16794EE19EA0F2300A1598F /* Build configuration list for PBXNativeTarget "MakerFaireTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +434,7 @@
 				D16794F019EA0F2300A1598F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
