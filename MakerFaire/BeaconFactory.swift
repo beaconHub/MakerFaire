@@ -22,6 +22,7 @@ class BeaconFactory {
         beaconDetails.append(CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "92AB49BE-4127-42F4-B532-90FAF1E26491"), identifier: "TwoCanoes 92AB49BE"))
         beaconDetails.append(CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), identifier: "RedBear B9407F30"))
         beaconDetails.append(CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "52414449-5553-4E45-5457-4F524B53434F"), identifier: "Radius Network 52414449"))
+        beaconDetails.append(CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "4f034efe-2bea-44ce-a949-d68271322954"), identifier: "Kopi"))
         
         return beaconDetails
     }
