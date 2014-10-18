@@ -8,10 +8,12 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     let notificationCenter = NSNotificationCenter.defaultCenter()
+    var rangedBeacons = [CLBeacon]()
     var managedObjectContext: NSManagedObjectContext? = nil
 
 
@@ -28,6 +30,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        notificationCenter.addObserver(self, selector: Selector("enteredRegion:"), name: kRangedBeaconRegionNotificationName, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +43,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
+            let object = self.rangedBeacons[indexPath.row] as CLBeacon
+            (segue.destinationViewController as DetailViewController).detailItem = object
             }
         }
     }
@@ -51,7 +56,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.rangedBeacons.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -66,7 +71,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        cell.textLabel?.text = ""
+        let object = self.rangedBeacons[indexPath.row] as CLBeacon
+        cell.textLabel?.text = object.proximityUUID.UUIDString
     }
 
     var _fetchedResultsController: NSFetchedResultsController? = nil
@@ -106,6 +112,26 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.tableView.endUpdates()
     }
 
+    //MARK: - NSNotification
+    
+    func enteredRegion (notification: NSNotification) {
+        if let dict = notification.userInfo as? Dictionary<String, [AnyObject]> {
+            if let beacons = dict[kRangedBeaconRegionNotificationUserInfoBeaconsKey] {
+                let count = self.rangedBeacons.count
+                for object in beacons {
+                    let beacon = object as CLBeacon
+                    let predicate = NSPredicate(format: "proximityUUID.UUIDString == %@ AND major == %@ AND minor == %@", beacon.proximityUUID.UUIDString, beacon.major, beacon.minor)
+                    let filteredArray = self.rangedBeacons.filter { predicate.evaluateWithObject($0) }
+                    if filteredArray.isEmpty {
+                        self.rangedBeacons.append(beacon)
+                    }
+                }
+                if self.rangedBeacons.count > count {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     /*
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
      

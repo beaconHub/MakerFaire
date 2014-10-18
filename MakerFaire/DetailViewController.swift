@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class DetailViewController: UIViewController {
 
@@ -24,7 +25,8 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         if let detail: AnyObject = self.detailItem {
             if let label = self.detailDescriptionLabel {
-                label.text = ""
+                let object = detail as CLBeacon
+                label.text =  "\(object.proximityUUID.UUIDString)\nmajor: \(object.major)\nminor: \(object.minor)"
             }
         }
     }
