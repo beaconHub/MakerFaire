@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = self.window!.rootViewController as UINavigationController
         let controller = navigationController.topViewController as MasterViewController
         controller.managedObjectContext = self.managedObjectContext
+        
+        self.monitorLocations()
+        
         return true
     }
 
@@ -112,3 +116,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+    func monitorLocations () {
+        LocationManager.sharedInstance.locationManager.monitoredRegions
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "enteredRegion:", name: kEnteredBeaconRegionNotificationName, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "exitedRegion:", name: kExitedBeaconRegionNotificationName, object: nil)
+    }
+    
+    func enteredRegion (notification: NSNotification) {
+        if let dict = notification.userInfo as? Dictionary<String, CLBeaconRegion> {
+            let beaconRegionObject = dict[kEnteredBeaconRegionNotificationUserInfoRegionKey]!
+            self.sendLocalNotificationWithMessage("You got new notification")
+        }
+    }
+    
+    func exitedRegion (notification: NSNotification) {
+        // exit region
+        println("app delegate exited region: \(notification.userInfo)")
+    }
+    
+    func sendLocalNotificationWithMessage (message: String) {
+        var notification = UILocalNotification()
+        notification.alertBody = message
+        notification.alertAction = "View Details"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+        
+        if notification.respondsToSelector("regionTriggersOnce") {
+            notification.regionTriggersOnce = true
+        }
+        
+        if UIApplication.sharedApplication().respondsToSelector("registerUserNotificationSettings:") {
+            let types = UIUserNotificationType.Badge | UIUserNotificationType.Sound | UIUserNotificationType.Alert
+            let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        }
+        
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+    
+    func clearNotifications () {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    }
+}
